@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load humanize %}
+<br><br>
+<div class="card">
+    <div class="card-body">
+        <h2>Listado de Campañas</h2>
+        <table class="table table-striped table-hover table-responsive-sm">
+            <tr>
+                <th>Nombre Campaña</th>
+                <th>Monto Objetivo</th>
+                <th>Opciones</th>
+            </tr>
+        
+            {% for c in campana %}
+                <tr>
+                    <td>{{c.nombre_campana | title}}</td>
+                    <td>${{ c.monto_objetivo_campana | intcomma}}</td>
+                    <td><a href="{% url 'modificar_campana' c.id %}" class="btn btn-info btn-sm">Modificar</a>
+                        <a href="{% url 'eliminar_campana' c.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                    
+                </tr>
+        
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
