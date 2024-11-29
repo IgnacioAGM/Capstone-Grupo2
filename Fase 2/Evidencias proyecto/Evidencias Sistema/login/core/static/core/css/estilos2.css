@@ -1,0 +1,307 @@
+/* Estilos generales para todas las páginas */
+body {
+    background-image: url('/static/core/img/Fondo2.png')!important; /* Ruta a tu imagen */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.navbar {
+    background-color: #007bff;
+    padding: 1rem;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    margin-right: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.navbar .nav-link:hover {
+    color: #ffc107;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: none !important; /* Desactiva la transición */
+}
+
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card img {
+    max-height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para formularios */
+.form-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilo para la paginación */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    margin: 0 2px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #f1f1f1;
+    border-color: #007bff;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Estilo del slider (carousel) */
+.carousel-inner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* Estilo para tarjetas de información (¿Quiénes Somos? y Nuestra Misión) */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Estilo para botones de alerta (aprobación/rechazo) */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+/* Estilo para el fondo y elementos de las campañas */
+.producto {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: none; /* Elimina la transición */
+}
+
+.detalles h2, .detalles h3, .detalles h4 {
+    margin-bottom: 0.5rem;
+}
+
+.detalles h3 {
+    color: #007bff;
+}
+
+.detalles h4 {
+    color: #28a745;
+}
+
+/* Ajuste de colores para la usabilidad */
+body {
+    background-color: #e9ecef;
+}
+
+h1 {
+    color: #007bff;
+}
+
+.pagination .page-link {
+    color: #007bff;
+}
+
+.pagination .active .page-link {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+@keyframes animacion_producto_desktop {
+    0% {
+        transform: rotate(-20deg);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+/* MEDIA QUERIES */
+
+/* TABLET */
+@media(max-width:1024px) {
+    .galeria {
+        grid-template-columns:1fr 1fr;
+    }
+
+    @keyframes animacion_producto_tablet {
+        0% {
+            opacity: 0; /* 0-1 */
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .productos .producto {
+        width: 50%;
+        animation: animacion_producto_tablet 2s;
+    }
+}
+
+/* SMARTPHONE */
+@media(max-width:480px) {
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    @keyframes animacion_producto_smartphone {
+        0% {
+            transform: scale(0.1); /* 0 - 1 */
+        }
+        80% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+}
+
+/* AGREGAR CAMPAÑA */
+.row {
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    margin-left: 10px;
+
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+h2 {
+    color: #007bff;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.d-flex {
+    margin-top: 1.5rem;
+}

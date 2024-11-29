@@ -1,8 +1,7 @@
-from django.db import models
-
-
+from django.utils.text import slugify
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 # Modelo TipoCampana
 class TipoCampana(models.Model):
@@ -14,6 +13,10 @@ class TipoCampana(models.Model):
 
 # Modelo Campana
 class Campana(models.Model):
+    estados = [
+        ('Pendiente', 'Pendiente'),
+        ('Aprobada', 'Aprobada'),
+        ('Rechazada', 'Rechazada'),]
     nombre_campana = models.CharField(max_length=200)
     descripcion_campana = models.TextField()
     monto_objetivo_campana = models.IntegerField()
@@ -23,9 +26,15 @@ class Campana(models.Model):
     imagen_campana = models.ImageField(upload_to="imagenes_campana", null=True, blank=True)
     tipo_campana = models.ForeignKey(TipoCampana, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    estado = models.CharField(max_length=10, choices=estados, default='Pendiente')
+    monto_donado = models.IntegerField(default=0)  # Campo para almacenar el monto total donado
+    slug = models.SlugField(unique=True, blank=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=True, blank=True)
 
-    def __str__(self):
-        return self.nombre_campana
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.nombre_campana)
+        super().save(*args, **kwargs)
 
 # Modelo Publicidad
 class Publicidad(models.Model):
@@ -75,16 +84,18 @@ class Transaccion(models.Model):
 
     def __str__(self):
         return self.referencia_webpay
-
+    
+from django.utils import timezone
 # Modelo Donacion
 class Donacion(models.Model):
     monto = models.IntegerField()
-    donador = models.ForeignKey(Donador, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Permitir valores nulos
     campana = models.ForeignKey(Campana, on_delete=models.CASCADE)
     transaccion = models.ForeignKey(Transaccion, on_delete=models.CASCADE)
+    fecha_donacion = models.DateTimeField(default=timezone.now)  # Establece una fecha predeterminada
 
     def __str__(self):
-        return f"Donación de {self.monto} a {self.campana.nombre_campana}"
+        return f"Donación de {self.monto} a {self.campana.nombre_campana} por {self.usuario.username}"
 
 
 

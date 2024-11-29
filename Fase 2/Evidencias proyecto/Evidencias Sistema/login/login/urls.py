@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from core.views import custom_password_reset_confirm  # Importa la vista personalizada
 
 urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
+    # Pon tu ruta personalizada ANTES de incluir las URLs de auth de Django
+    path('password-reset-confirm/<uidb64>/<token>/', custom_password_reset_confirm, name='password_reset_confirm'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 

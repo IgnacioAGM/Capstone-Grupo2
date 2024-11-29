@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load humanize %}
+<br><br>
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Listado de Campañas Pendientes</h2>
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>Nombre Campaña</th>
+                    <th>Usuario</th>
+                    <th>Monto Objetivo</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in campanas_pendientes %}
+                    <tr>
+                        <td>{{ c.nombre_campana | title }}</td>
+                        <td>{{ c.user.first_name }} {{ c.user.last_name }}</td>
+                        <td>${{ c.monto_objetivo_campana | intcomma }}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" onclick="aprobarCampana('{{ c.id }}')">Aprobar</button>
+                            <button class="btn btn-danger btn-sm" onclick="rechazarCampana('{{ c.id }}')">Rechazar</button>
+                            <a href="{% url 'detalle_campana' c.id %}" class="btn btn-info btn-sm">Ver Detalles</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function aprobarCampana(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Quieres aprobar esta campaña?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, aprobar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireccionar a la URL para aprobar la campaña
+                window.location.href = "{% url 'aprobar_campana' 0 %}".replace('/0/', '/' + id + '/');
+            }
+        });
+    }
+
+    function rechazarCampana(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Quieres rechazar esta campaña?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, rechazar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redireccionar a la URL para rechazar la campaña
+                window.location.href = "{% url 'rechazar_campana' 0 %}".replace('/0/', '/' + id + '/');
+            }
+        });
+    }
+</script>
+
+{% endblock %}

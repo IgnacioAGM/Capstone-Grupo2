@@ -20,10 +20,21 @@ from .views import *
 urlpatterns = [
     path('', home, name='home'),
     path('campanas/', campanas, name='campanas'),
-    path('logout/',exit,name='exit'),
+    path('logout/', exit, name='exit'),
     path('register/', register, name='register'),
     path('agregar-campana/', agregar_campana, name='agregar_campana'),
     path('listar-campana/', listar_campanas, name='listar_campana'),
-    path('modificar-campana/<id>/', modificar_campana, name='modificar_campana'),
+    path('modificar-campana/<uuid:uuid>/', modificar_campana, name='modificar_campana'),
     path('eliminar-campana/<id>/', eliminar_campana, name='eliminar_campana'),
+    path('moderar-campanas/', moderar_campanas, name='moderar_campanas'),
+    path('aprobar-campana/<int:pk>/', aprobar_campana, name='aprobar_campana'),
+    path('rechazar-campana/<int:pk>/', rechazar_campana, name='rechazar_campana'),
+    path('donacion/<int:campana_id>/', iniciar_donacion, name='iniciar_donacion'),
+    path('donacion/confirmar/', confirmar_donacion, name='confirmar_donacion'),
+    path('error/', error, name='error'),
+    path('historial-donaciones/', historial_donaciones, name='historial_donaciones'),
+    path('detalle-campana/<int:id>/', detalle_campana, name='detalle_campana'),
+    path('password-reset/', password_reset_request, name='password_reset_request'),
+    path('password-reset-confirm/<uidb64>/<token>/', custom_password_reset_confirm, name='password_reset_confirm'),
 ]
+

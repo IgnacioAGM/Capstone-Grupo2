@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Comprobante de Transacción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Comprobante de Transacción</h1>
+        <p>Gracias por tu donación. Aquí están los detalles de tu transacción:</p>
+        <ul>
+            <li><strong>Fecha:</strong> {{ detalles.fecha }}</li>
+            <li><strong>Monto:</strong> ${{ detalles.monto }}</li>
+            <li><strong>Campaña:</strong> {{ detalles.campana }}</li>
+        </ul>
+        <p>¡Gracias por tu apoyo!</p>
+    </div>
+</body>
+</html>

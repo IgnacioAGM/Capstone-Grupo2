@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load humanize %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ campana.nombre_campana | title }}</h2>
+        </div>
+        <div class="card-body">
+            <h5>Usuario: {{ campana.user.first_name }} {{ campana.user.last_name }}</h5>
+            <p><strong>Meta:</strong> ${{ campana.monto_objetivo_campana | intcomma }}</p>
+            <p><strong>Monto Donado:</strong> ${{ campana.monto_donado | intcomma }}</p>
+            <p><strong>Tipo de Campaña:</strong> {{ campana.tipo_campana }}</p>
+            <p><strong>Descripción:</strong> {{ campana.descripcion_campana }}</p>
+            {% if campana.imagen_campana %}
+            <img src="{{ campana.imagen_campana.url }}" class="img-fluid mt-3" alt="Imagen de la campaña">
+            {% endif %}
+            
+            <!-- Formulario de Donación -->
+            <form method="post" action="{% url 'iniciar_donacion' campana.id %}" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="monto_donacion" class="form-label">Monto a donar:</label>
+                    <input type="number" id="monto_donacion" name="monto_donacion" class="form-control" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Donar</button>
+            </form>
+            
+            <div class="mt-4">
+                <a href="{% url 'campanas' %}" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

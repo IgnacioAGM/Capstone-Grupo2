@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,11 +61,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'login.urls'
-
+import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,7 +88,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': '127.0.0.1:1521/XEPDB1',
-        'USER': 'Login',
+        'USER': 'Login3',
         'PASSWORD': '123',
         'TEST': {
             'USER': 'default_test',
@@ -132,7 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -149,3 +151,18 @@ import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Configuración para mensajes
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'  # Esto siempre es 'apikey' en SendGrid
+EMAIL_HOST_PASSWORD = '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'  # Reemplaza con tu API Key de SendGrid
+DEFAULT_FROM_EMAIL = 'Portal de Donaciones <pruebacapstone7@gmail.com>'

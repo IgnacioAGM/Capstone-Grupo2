@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load humanize %}
+<h1 class="text-center my-5">Historial de Donaciones</h1>
+
+<div class="container">
+    {% if donaciones %}
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>Campaña</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donacion in donaciones %}
+                <tr>
+                    <td>{{ donacion.campana.nombre_campana }}</td>
+                    <td>${{ donacion.monto | intcomma }}</td>
+                    <td>{{ donacion.fecha_donacion }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            No has realizado donaciones todavía.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

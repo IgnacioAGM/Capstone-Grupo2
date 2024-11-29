@@ -1,30 +1,68 @@
 {% extends 'core/base.html' %}
 
-
 {% block content %}
 {% load humanize %}
-<H1>Campañas</H1>
-<div class="productos">
-    {% for c in campanas %}
-    <div class="producto">
-        <div class="contenedor_producto">
-            <div class="card">
-                <div class="card-body">
-                    {% if c.imagen_campana %}
-                    <img src="{{ c.imagen_campana.url }}" alt="Imagen de la campaña">
-                    {% endif %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Campañas</h1>
+    <form method="get" class="mb-4 d-flex justify-content-center">
+        {{ form.tipo_campana }}
+        <button type="submit" class="btn btn-primary ms-2">Filtrar</button>
+    </form>
 
-                    <div class="detalles">
-                        <h5>Usuario: {{ c.user.first_name }} {{c.user.last_name}}</h5>
-                        <h2>{{ c.nombre_campana | title }}</h2>
-                        
-                        <h3>${{ c.monto_objetivo_campana | intcomma}}</h3>
-                        <h4>Tipo de Campaña: {{ c.tipo_campana }}</h4>
-                    </div>
-                </div> <!-- Cierre de card-body -->
-            </div> <!-- Cierre de card -->
-        </div> <!-- Cierre de contenedor_producto -->
-    </div> <!-- Cierre de producto -->
-    {% endfor %}
+    <div class="row justify-content-center">
+        {% for c in entity %}
+        <div class="producto col-sm-12 col-md-6 col-lg-4 d-flex align-items-stretch mb-4">
+            <div class="w-100 h-100">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        {% if c.imagen_campana %}
+                        <img src="{{ c.imagen_campana.url }}" class="card-img-top mb-3" alt="Imagen de la campaña">
+                        {% endif %}
+
+                        <div class="detalles flex-grow-1">
+                            <h5>Usuario: {{ c.user.first_name }} {{ c.user.last_name }}</h5>
+                            <h2 class="card-title">
+                                <a href="{% url 'detalle_campana' c.id %}" class="text-decoration-none text-primary">{{ c.nombre_campana | title }}</a>
+                            </h2>
+                            <h3 class="text-primary">Meta: ${{ c.monto_objetivo_campana | intcomma }}</h3>
+                            <h4 class="text-success">Monto Donado: ${{ c.monto_donado | intcomma }}</h4>
+                            <h4>Tipo de Campaña: {{ c.tipo_campana }}</h4>
+
+                            <!-- Barra de Progreso -->
+                            <div class="progress mt-3">
+                                <div class="progress-bar" role="progressbar" style="width: {{ c.progreso }}%;" aria-valuenow="{{ c.progreso }}" aria-valuemin="0" aria-valuemax="100">
+                                    {{ c.progreso|floatformat:2 }}%
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de Donación -->
+                        <form method="post" action="{% url 'iniciar_donacion' c.id %}" class="mt-3">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="monto_donacion_{{ c.id }}" class="form-label">Monto a donar:</label>
+                                <input type="number" id="monto_donacion_{{ c.id }}" name="monto_donacion" class="form-control" min="1" required>
+                            </div>
+                            
+                            {% if not request.user.is_authenticated %}
+                            <div class="mb-3">
+                                <label for="email_donante_{{ c.id }}" class="form-label">Correo Electrónico:</label>
+                                <input type="email" id="email_donante_{{ c.id }}" name="email" class="form-control" required>
+                            </div>
+                            
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary w-100">Donar</button>
+                        </form>
+                    </div> <!-- Cierre de card-body -->
+                </div> <!-- Cierre de card -->
+            </div> <!-- Cierre de w-100 h-100 -->
+        </div> <!-- Cierre de producto -->
+        {% endfor %}
+    </div> <!-- Cierre de row -->
+
+    <!-- Paginación -->
+    <div class="pagination-container mt-4">
+        {% include 'core/paginator.html' %}
+    </div>
 </div>
 {% endblock %}

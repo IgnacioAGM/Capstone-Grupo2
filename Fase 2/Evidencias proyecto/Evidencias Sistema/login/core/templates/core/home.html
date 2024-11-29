@@ -1,9 +1,52 @@
 {% extends 'core/base.html' %}
 
-
 {% block content %}
-{% if request.user.is_authenticated %}
+{% load static %}
+<div id="slider" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'core/img/slider2.png' %}" class="d-block w-100" alt="Bienvenido">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="text-white">Bienvenido al Portal de Donaciones</h5>
 
-{% endif %}
+                <p>Juntos, hacemos la diferencia.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">¿Quiénes Somos?</h3>
+                    <p class="card-text">Somos un grupo de estudiantes de Duoc UC que, a través de nuestros conocimientos y habilidades, buscamos desarrollar soluciones tecnológicas innovadoras. Este proyecto nace como parte de nuestro compromiso académico, con el objetivo de generar un impacto positivo y contribuir al crecimiento de nuestra comunidad.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'core/img/donaciones.png' %}" class="img-fluid" alt="Imagen representativa">
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{% static 'core/img/comunidad.jpg' %}" class="img-fluid" alt="Imagen misión">
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Nuestra Misión</h3>
+                    <p class="card-text">Nuestra misión es diseñar e implementar soluciones tecnológicas eficientes que respondan a las necesidades de las personas y organizaciones, promoviendo la innovación, la accesibilidad y la colaboración en cada uno de nuestros proyectos.
+
+                        Con el desarrollo del portal de donaciones, buscamos facilitar la conexión entre quienes necesitan ayuda y quienes desean contribuir, ofreciendo una plataforma segura, confiable y transparente que fomente la solidaridad y el impacto positivo en la sociedad.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
